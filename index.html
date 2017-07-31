@@ -17,23 +17,40 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>Hangman Game</h1>
-			<p>Rules: You get 10 guesses to correctly identify the word. Feeling extra risky? Select "Guess word". A correct guess will give you extra points per letter unrevealed. But be careful! An incorrect guess results in an instant game over.</p>
+			<p id="rules">Rules: You get 10 guesses to correctly identify the word. Feeling extra risky? Select "Guess word". A correct guess will give you extra points per letter unrevealed. But be careful! An incorrect guess results in an instant game over.</p>
 		</div>
 	</div>
 
-	<div class="container id="game">
-		<div class="row" id="hangman-pic">
-			<img src="assets/images/hangmanLogo.png">
-			<p>Select Start or press the Space Bar to begin a game.</p>
-			<div class="col-md-12">
-				<button class = "btn button-default" onclick="startGame()">Start</button>
+	<div class="container">
+		<div class="row" id="game">
+			<div class="col-xs-12 col-md-6" id="hangman-pic">
+				<img src="assets/images/hangmanLogo.png">
+				<p>Select Start or press the Space Bar to begin a game.</p>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<div class="row" id="game-board">
+					<div class="col-xs-12" id="puzzle">
+						<button class = "btn btn-primary" onclick="startGame()">Start</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12" id="used-letters">
+
+					</div>
+				</div>
+			</div>
 			</div>
 		</div>
 		
 		<!-- Score -->
-		<div class="row" id="scoreBoard">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" id="score-board">
+					
+				</div>
+			</div>
 
-		</div>
+
 
 	</div><!-- ./container -->
 	
@@ -42,3 +59,28 @@
 	<script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
 </html>
+
+<!--
+<button type="button" class="btn btn-default">e</button>
+	<button type="button" class="btn btn-default">f</button>
+	<button type="button" class="btn btn-default">g</button>
+	<button type="button" class="btn btn-default">h</button>
+	<button type="button" class="btn btn-default">i</button>
+	<button type="button" class="btn btn-default">j</button>
+	<button type="button" class="btn btn-default">k</button>
+	<button type="button" class="btn btn-default">l</button>
+	<button type="button" class="btn btn-default">m</button>
+	<button type="button" class="btn btn-default">n</button>
+	<button type="button" class="btn btn-default">o</button>
+	<button type="button" class="btn btn-default">p</button>
+	<button type="button" class="btn btn-default">q</button>
+	<button type="button" class="btn btn-default">r</button>
+	<button type="button" class="btn btn-default">s</button>
+	<button type="button" class="btn btn-default">t</button>
+	<button type="button" class="btn btn-default">u</button>
+	<button type="button" class="btn btn-default">v</button>
+	<button type="button" class="btn btn-default">w</button>
+	<button type="button" class="btn btn-default">x</button>
+	<button type="button" class="btn btn-default">y</button>
+	<button type="button" class="btn btn-default">z</button>
+	-->

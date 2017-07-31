@@ -2,7 +2,16 @@ body {
 /*	background: url("../images/notebook-background.png");
 */}
 
-#hangman-pic img{
-	max-width: 200px;
+#hangman-pic img {
+	max-width: 400px;
 	width: 100%;
+}
+
+.list-group-item {
+float: left;
+}
+
+#alphabet-btns {
+	
+	margin: 0 10px;
 }
