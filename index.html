@@ -6,15 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Hangman Game</title>
-
+	<link href="https://fonts.googleapis.com/css?family=Lato|Permanent+Marker" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
 </head>
 <body>
-
-	<div class="jumbotron">
+	<!-- Header -->
+	<div class="page-header">
 		<div class="container">
 			<h1>Hangman Game</h1>
 			<p id="rules">Rules: You get 10 guesses to correctly identify the word. Feeling extra risky? Select "Guess word". A correct guess will give you extra points per letter unrevealed. But be careful! An incorrect guess results in an instant game over.</p>
@@ -28,34 +28,35 @@
 			<div class="col-xs-12 col-sm-6 col-md-4" id="hangman-pic">
 				<img src="assets/images/hangmanLogo.png">
 				<p>Select Start or press the Space Bar to begin a game.</p>
+				<button class = "btn btn-primary" onclick="startGame()">Start</button>
 			</div>
 
 			<!-- Puzzle -->	
-			<div class="col-xs-12 col-sm-6 col-md-4" id="game-board">
+			<div class="col-xs-12 col-sm-6 col-md-5 marker" id="game-board">
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12" id="puzzle">
-						<button class = "btn btn-primary" onclick="startGame()">Start</button>
+					<div class="col-xs-12 col-sm-12 col-md-12" id="puzzle">		<h2 id="puzzle-title"></h2>
+						<p id="puzzle-word"></p>
 					</div>
 				</div>
 				<!-- Used Letters -->
 				<div class="row">	
-					<div class="col-xs-12 col-sm-12 col-md-12" id="used-letters"></div>
+					<div class="col-xs-12 col-sm-12 col-md-12" id="used-letters">
+						<h2 id="used-title"></h2>
+						<p id="letters-guessed"></p>
+					</div>
+				</div>
+			
+		
+				<!-- Score -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12" id="score-board">
+						<h2 id="stat-title"></h2>
+						<p id="stats"></p>
+					</div>
 				</div>
 			</div>
-		
-			<!-- Score -->
-			<div class="col-xs-12 col-sm-12 col-md-4" id="score-board"></div>
 		</div>
 	</div>
-		
-		<!-- Score -->
-		<div class="container">
-			<div class="row">
-				
-			</div>
-
-
-
 	</div><!-- ./container -->
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

@@ -22,11 +22,11 @@ var randNum = Math.floor(Math.random() * wordList.length);
 var currentWord = wordList[randNum];
 console.log("Current word is "+currentWord);
 var puzzleWord = [currentWord.length];
-var puzzle = document.getElementById("puzzle");
-var usedLetters = document.getElementById("used-letters");
+var puzzle = document.getElementById("puzzle-word");
+var usedLetters = document.getElementById("letters-guessed");
 var puzzleTitle = "<h3>Puzzle</h3>";
 
-// every letter in the word is symbolized by an underscore in the puzzlefield
+// Initialize puzzle word with underscores
 for (var i = 0; i < currentWord.length; i++){
 	puzzleWord[i] = "_ ";
 }
@@ -75,23 +75,20 @@ function startGame() {
 	flag = 1;
 	
 	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
-	var instructions = "<p>Press a letter to make a guess.</p>";
-	var usedTitle = "<h3>Incorrect Letters Guessed</h3>";
-	var puzzleTitle = "<h3>Puzzle</h3>";
-	// var scoreBoard =
-	// "<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
-	// "<p>Number of wins: " + wins + "</p>" +
- //    "<p>Current game score: " + currentScore + "</p>" +
- //    "<p>Total overall score: " + totalScore + "</p>"
- //    ;
+	var instructions = "Press a letter to make a guess.";
+	var usedTitle = "Incorrect Letters Guessed";
+	var puzzleTitle = "Puzzle";
+	var statTitle = "Stats";
+
 	document.querySelector("#rules").innerHTML = instructions;
 	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
-	document.querySelector("#score-board").innerHTML = updateScore();
-	document.querySelector("#puzzle").innerHTML = puzzleTitle;
-	document.querySelector("#used-letters").innerHTML = usedTitle;
+
+	document.querySelector("#puzzle-title").innerHTML = puzzleTitle;
+	document.querySelector("#used-title").innerHTML = usedTitle;
+	document.querySelector("#stat-title").innerHTML = statTitle;
+	document.querySelector("#stats").innerHTML = updateScore();
 	
 	printPuzzle();
-//	document.querySelector("#alphabet-btns").innerHTML = alphabetButton;
 }
 // function replayGame() {
 // 	currentScore = 0;
@@ -123,10 +120,16 @@ document.onkeyup = function(event){
 	// valid user guess calls function to play the letter on the board
 	else { 
 		guessLetter(userGuessIndex);
+
+		var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
+
+  		//update webpage with current score after each letter guess
+     	document.querySelector("#stats").innerHTML = updateScore();
+     	document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
 		
 	}
 
-	// Check to see if game is over or if the user won
+     // Check to see if game is over or if the user won
      if (numWrongGuesses >= 10) {
      	//game over
      	alert("Game Over!!");
@@ -136,14 +139,7 @@ document.onkeyup = function(event){
      	wins++;
      	totalScore += currentScore;
      	//reset game
-     }    
-
-    var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
-
-  //  var scoreBoard = updateScore();
-	//update webpage with current score after each letter guess
-     document.querySelector("#score-board").innerHTML = updateScore();
-     document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
+     }  
 }
 
 function puzzleSolved(){
@@ -164,12 +160,12 @@ function isALetter (n) {
 }
 	
 
-// Function that takes in the alphabet index of a valid userGuess and places it on the game board.
+// Function that takes in the alphabet index of a valid userGuess and places the letter on the game board.
 function guessLetter (index) {
 
 	// check if letter is in word
-	if (playableLetter(index)) { // If letter is in word
-		puzzle.innerHTML= puzzleTitle; // delete current puzzle
+	if (playableLetter(index)) {
+		puzzle.innerHTML= ""; // delete current puzzle
 		printPuzzle();   // print updated puzzle
 	}
 	else {
@@ -204,7 +200,7 @@ function playableLetter(index) {
 	return letterInWord;
 }
 
-// prints the Current state of the puzzle
+// Prints the puzzle by appending each value in array to html element
 function printPuzzle(){
 	for (var i = 0; i < puzzleWord.length; i++){
 		var letter = document.createTextNode(puzzleWord[i]);
@@ -228,11 +224,4 @@ function updateScore(){
     "<p>Total overall score: " + totalScore + "</p>"
     ;
 	return (newScore);
-}
-
-function printArray(arr){
-	console.log("Print array: ");
-	for(var i=0; i<arr.length; i++){
-		console.log(arr[i]);
-	}
 }
