@@ -23,31 +23,35 @@
 
 	<div class="container">
 		<div class="row" id="game">
-			<div class="col-xs-12 col-md-6" id="hangman-pic">
+
+			<!-- Picture -->
+			<div class="col-xs-12 col-sm-6 col-md-4" id="hangman-pic">
 				<img src="assets/images/hangmanLogo.png">
 				<p>Select Start or press the Space Bar to begin a game.</p>
 			</div>
-			<div class="col-xs-12 col-md-6">
-				<div class="row" id="game-board">
-					<div class="col-xs-12" id="puzzle">
+
+			<!-- Puzzle -->	
+			<div class="col-xs-12 col-sm-6 col-md-4" id="game-board">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12" id="puzzle">
 						<button class = "btn btn-primary" onclick="startGame()">Start</button>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-12" id="used-letters">
-
-					</div>
+				<!-- Used Letters -->
+				<div class="row">	
+					<div class="col-xs-12 col-sm-12 col-md-12" id="used-letters"></div>
 				</div>
 			</div>
-			</div>
+		
+			<!-- Score -->
+			<div class="col-xs-12 col-sm-12 col-md-4" id="score-board"></div>
 		</div>
+	</div>
 		
 		<!-- Score -->
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12" id="score-board">
-					
-				</div>
+				
 			</div>
 
 

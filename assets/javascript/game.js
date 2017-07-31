@@ -24,7 +24,7 @@ console.log("Current word is "+currentWord);
 var puzzleWord = [currentWord.length];
 var puzzle = document.getElementById("puzzle");
 var usedLetters = document.getElementById("used-letters");
-var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
+var puzzleTitle = "<h3>Puzzle</h3>";
 
 // every letter in the word is symbolized by an underscore in the puzzlefield
 for (var i = 0; i < currentWord.length; i++){
@@ -74,21 +74,22 @@ function startGame() {
 
 	flag = 1;
 	
+	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
 	var instructions = "<p>Press a letter to make a guess.</p>";
 	var usedTitle = "<h3>Incorrect Letters Guessed</h3>";
 	var puzzleTitle = "<h3>Puzzle</h3>";
-	var scoreBoard =
-	"<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
-	"<p>Number of wins: " + wins + "</p>" +
-    "<p>Current game score: " + currentScore + "</p>" +
-    "<p>Total overall score: " + totalScore + "</p>"
-    ;
+	// var scoreBoard =
+	// "<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
+	// "<p>Number of wins: " + wins + "</p>" +
+ //    "<p>Current game score: " + currentScore + "</p>" +
+ //    "<p>Total overall score: " + totalScore + "</p>"
+ //    ;
 	document.querySelector("#rules").innerHTML = instructions;
 	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
-	document.querySelector("#score-board").innerHTML = scoreBoard;
+	document.querySelector("#score-board").innerHTML = updateScore();
 	document.querySelector("#puzzle").innerHTML = puzzleTitle;
 	document.querySelector("#used-letters").innerHTML = usedTitle;
-
+	
 	printPuzzle();
 //	document.querySelector("#alphabet-btns").innerHTML = alphabetButton;
 }
@@ -125,15 +126,6 @@ document.onkeyup = function(event){
 		
 	}
 
-	var scoreBoard =
-	"<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
-	"<p>Number of wins: " + wins + "</p>" +
-    "<p>Current game score: " + currentScore + "</p>" +
-    "<p>Total overall score: " + totalScore + "</p>"
-    ;
-	//update webpage with current score after each letter guess
-     document.querySelector("#score-board").innerHTML = scoreBoard;
-
 	// Check to see if game is over or if the user won
      if (numWrongGuesses >= 10) {
      	//game over
@@ -144,7 +136,14 @@ document.onkeyup = function(event){
      	wins++;
      	totalScore += currentScore;
      	//reset game
-     }     
+     }    
+
+    var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
+
+  //  var scoreBoard = updateScore();
+	//update webpage with current score after each letter guess
+     document.querySelector("#score-board").innerHTML = updateScore();
+     document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
 }
 
 function puzzleSolved(){
@@ -170,13 +169,13 @@ function guessLetter (index) {
 
 	// check if letter is in word
 	if (playableLetter(index)) { // If letter is in word
-		puzzle.innerHTML=""; // delete current puzzle
+		puzzle.innerHTML= puzzleTitle; // delete current puzzle
 		printPuzzle();   // print updated puzzle
 	}
 	else {
 		var wrongChar = alphabetArray[index].toUpperCase();
 		numWrongGuesses++;
-		document.querySelector("#hangman-pic").innerHTML = hangmanImg;
+	//	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
 
 		// add letter to the used-letters section
 		var letter = document.createTextNode(" " + wrongChar);
@@ -202,7 +201,6 @@ function playableLetter(index) {
 		}
 	}
 
-	printArray(puzzleWord);
 	return letterInWord;
 }
 
@@ -219,6 +217,17 @@ function initBooleanArray (arr, size) {
 	for (var i = 0; i < size; i++) {
 	  arr[i] = false;
 	}
+}
+
+// Function that updates and returns the new score values
+function updateScore(){
+	var newScore =
+	"<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
+	"<p>Number of wins: " + wins + "</p>" +
+    "<p>Current game score: " + currentScore + "</p>" +
+    "<p>Total overall score: " + totalScore + "</p>"
+    ;
+	return (newScore);
 }
 
 function printArray(arr){
