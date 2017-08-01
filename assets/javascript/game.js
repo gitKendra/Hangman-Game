@@ -4,6 +4,8 @@ const POINT_VALUE = 10;
 const POINT_MULTIPLIER = 5;
 
 var flag = 0;
+var counter = 0; // counts number of words played
+var lives = 3;
 var wins = 0;
 var currentScore = 0;
 var totalScore = 0;
@@ -11,145 +13,193 @@ var numWrongGuesses = 0;
 var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 					"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var wordList = ["accommodate", "achieve", "apparently", "appearance", "believe",
-					"basically", "bizarre", "calendar", "chauffeur", "cemetery", 
-					"committee", "conscious", "ecstasy", "existence", "foreseeable",
-					"gist", "glamorous", "immediately", "irresistible", "pavilion",
-					"pharaoh", "piece", "publicly", "separate", "resistance", 
-					"surprise", "tendency", "truly", "unfortunately"];
+				"basically", "bizarre", "calendar", "chauffeur", "cemetery", 
+				"committee", "conscious", "ecstasy", "existence", "foreseeable",
+				"gist", "glamorous", "immediately", "irresistible", "pavilion",
+				"pharaoh", "piece", "publicly", "separate", "resistance", 
+				"surprise", "tendency", "truly", "unfortunately"];
 
 var randNum = Math.floor(Math.random() * wordList.length);
 
-var currentWord = wordList[randNum];
-console.log("Current word is "+currentWord);
-var puzzleWord = [currentWord.length];
 var puzzle = document.getElementById("puzzle-word");
 var usedLetters = document.getElementById("letters-guessed");
-var puzzleTitle = "<h3>Puzzle</h3>";
 
-// Initialize puzzle word with underscores
-for (var i = 0; i < currentWord.length; i++){
-	puzzleWord[i] = "_ ";
-}
+var currentWord = wordList[randNum];
+var puzzleWord = [currentWord.length];
 
-// Declare and initialize boolean arrays
+
+console.log("Current word is " + currentWord);
+console.log("Current word length is " + currentWord.length);
+
+// Initialize boolean arrays to track used letters and words
 var usedWord = [];
 var letterGuessed = [];
 initBooleanArray(letterGuessed, 26);
 initBooleanArray(usedWord, wordList.length);
-
-//var gameBoard ;
-var alphabetButton =
-	"<button type=\"button\" id=\"btn-a\" class=\"btn btn-default\">a</button>" + 
-	"<button type=\"button\" id=\"btn-b\" class=\"btn btn-default\">b</button>" +
-	"<button type=\"button\" id=\"btn-c\" class=\"btn btn-default\">c</button>" +
-	"<button type=\"button\" id=\"btn-d\" class=\"btn btn-default\">d</button>" +
-	"<button type=\"button\" id=\"btn-e\" class=\"btn btn-default\">e</button>" +
-	"<button type=\"button\" id=\"btn-f\" class=\"btn btn-default\">f</button>" +
-	"<button type=\"button\" id=\"btn-g\" class=\"btn btn-default\">g</button>" +
-	"<button type=\"button\" id=\"btn-h\" class=\"btn btn-default\">h</button>" +
-	"<button type=\"button\" id=\"btn-i\" class=\"btn btn-default\">i</button>" +
-	"<button type=\"button\" id=\"btn-j\" class=\"btn btn-default\">j</button>" +
-	"<button type=\"button\" id=\"btn-k\" class=\"btn btn-default\">k</button>" +
-	"<button type=\"button\" id=\"btn-l\" class=\"btn btn-default\">l</button>" +
-	"<button type=\"button\" id=\"btn-m\" class=\"btn btn-default\">m</button>" +
-	"<button type=\"button\" id=\"btn-n\" class=\"btn btn-default\">n</button>" +
-	"<button type=\"button\" id=\"btn-o\" class=\"btn btn-default\">o</button>" +
-	"<button type=\"button\" id=\"btn-p\" class=\"btn btn-default\">p</button>" +
-	"<button type=\"button\" id=\"btn-q\" class=\"btn btn-default\">q</button>" +
-	"<button type=\"button\" id=\"btn-r\" class=\"btn btn-default\">r</button>" +
-	"<button type=\"button\" id=\"btn-s\" class=\"btn btn-default\">s</button>" +
-	"<button type=\"button\" id=\"btn-t\" class=\"btn btn-default\">t</button>" +
-	"<button type=\"button\" id=\"btn-u\" class=\"btn btn-default\">u</button>" +
-	"<button type=\"button\" id=\"btn-v\" class=\"btn btn-default\">v</button>" +
-	"<button type=\"button\" id=\"btn-w\" class=\"btn btn-default\">w</button>" +
-	"<button type=\"button\" id=\"btn-x\" class=\"btn btn-default\">x</button>" +
-	"<button type=\"button\" id=\"btn-y\" class=\"btn btn-default\">y</button>" +
-	"<button type=\"button\" id=\"btn-z\" class=\"btn btn-default\">z</button>"
-	;
-
+usedWord[randNum] = true;
 
 // /* Functions */
 
 function startGame() {
-
+console.log("Current word is " + currentWord);
+	// Initialize variables
 	flag = 1;
 	
-	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
+	// Initialize puzzle word with underscores
+	for (var i = 0; i < currentWord.length; i++){
+		puzzleWord[i] = "_ ";
+	}
+
+	// delete puzzle and incorrect guesses
+	puzzle.innerHTML= "";
+	usedLetters.innerHTML= "";
+
+	// Set text variables to be updated in HTML
+	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
 	var instructions = "Press a letter to make a guess.";
-	var usedTitle = "Incorrect Letters Guessed";
+	var usedTitle = "Incorrect Guesses";
 	var puzzleTitle = "Puzzle";
 	var statTitle = "Stats";
 
+	// change html with appropriate text and images
 	document.querySelector("#rules").innerHTML = instructions;
 	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
-
 	document.querySelector("#puzzle-title").innerHTML = puzzleTitle;
 	document.querySelector("#used-title").innerHTML = usedTitle;
 	document.querySelector("#stat-title").innerHTML = statTitle;
 	document.querySelector("#stats").innerHTML = updateScore();
-	
+
+	printArray(puzzleWord);
 	printPuzzle();
 }
-// function replayGame() {
-// 	currentScore = 0;
-// }
 
-// What to do on keypress
+	// What to do on keypress
 document.onkeyup = function(event){
-	var userGuess = event.which;
-	var userGuessIndex = userGuess-65;
 
-	// Special case 1 and 2: Don't start game unless spacebar is pressed
-	if (flag == 0 && userGuess != 32){
-		console.log("flag 0 userGuess not spacebar");
-		return;
+	// Check if user completed all words in list or lost too many lives
+	if (counter == wordList.length || lives == 0) {
+		//game over. do nothing
 	}
-	else if (flag == 0 && userGuess == 32) {
-		startGame();
-		return;
-	}
-	// If letter has previously been guessed, alert user.
-	else if (letterGuessed[userGuessIndex]){
-		alert("The letter '"+alphabetArray[userGuessIndex]+"' has already been guessed. Try another.");
-		return;
-	}
-	// If not a letter, do nothing.
-	else if (!isALetter(userGuess)){
-		return;
-	}
-	// valid user guess calls function to play the letter on the board
-	else { 
-		guessLetter(userGuessIndex);
+	else{
 
-		var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png>";
+		// Record keyup into variable and set variable to index value of appropriate alphabetArray
+		var userGuess = event.which;
+		var userGuessIndex = userGuess-65;
 
-  		//update webpage with current score after each letter guess
-     	document.querySelector("#stats").innerHTML = updateScore();
-     	document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
-		
-	}
+		// Special case 1 and 2: Don't start game unless spacebar is pressed
+		if (flag == 0 && userGuess != 32){
+			console.log("flag 0 userGuess not spacebar");
+			return;
+		}
+		else if (flag == 0 && userGuess == 32) {
+			startGame();
+			return;
+		}
+		// If letter has previously been guessed, alert user.
+		else if (letterGuessed[userGuessIndex]){
+			alert("The letter '"+alphabetArray[userGuessIndex]+"' has already been guessed. Try another.");
+			return;
+		}
+		// If not a letter, do nothing.
+		else if (!isALetter(userGuess)){
+			return;
+		}
+		// valid user guess calls function to play the letter on the board and updates html
+		else {
+			guessLetter(userGuessIndex);
 
-     // Check to see if game is over or if the user won
-     if (numWrongGuesses >= 10) {
-     	//game over
-     	alert("Game Over!!");
-     }
-     if (puzzleSolved()) {
-     	alert("You've solved the word with a score of " + currentScore + "!");
-     	wins++;
-     	totalScore += currentScore;
-     	//reset game
-     }  
+			//update webpage with current details
+			var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
+	     	document.querySelector("#stats").innerHTML = updateScore();
+	     	document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
+		}
+
+	    // User won the round
+	    if (puzzleSolved()) {
+	    console.log("you're a winner");
+	    	document.querySelector("#rules").innerHTML = instructions;
+	     	document.querySelector("#stats").innerHTML = updateScore();
+	     	var hangmanImg = "<img src=assets/images/hangman-win.png class=\"img-responsive\">";
+	     	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
+	     	wins++;
+	     	totalScore += currentScore;
+
+	     	// reset flag to play again
+	     	flag = 0;
+	     	// add instructions to press Spacebar to play again
+	     	var instructions = "<h3>Play again? Press the spacebar to play again.</h3>"
+	     	document.querySelector("#rules").innerHTML = instructions;
+
+	     	resetGame();
+	     } 
+	     
+	    // User lost the round
+	    if (numWrongGuesses == 10) {
+	 console.log("number of wrong guesses is 10");   	
+	     	lives--;
+
+	     	// update image and html for Game Over
+	     	var hangmanImg = "<img src=assets/images/hangman-lose.png class=\"img-responsive\">";
+	     	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
+	     	var instructions;
+	     	if (lives > 0) {
+	     		instructions = "<h3>You lost a life!! Press the spacebar to try again.</h3>"
+	     	}
+	     	else {
+	     		instructions = "<h3>Game Over!! Thanks for playing.</h3>"
+	     		flag = -1; // mark as game over
+	     	}
+	     	document.querySelector("#rules").innerHTML = instructions;
+	     	document.querySelector("#stats").innerHTML = updateScore();
+	     	
+	     	// Show the completed puzzle answer on screen
+	     	puzzleTitle = "Puzzle Answer"
+	     	puzzle.innerHTML = "";
+	     	for(var i = 0; i<currentWord.length; i++){
+	     		var letter = document.createTextNode(currentWord[i] + " ");
+				puzzle.appendChild(letter);
+	     	}
+	     	resetGame();
+	     }
+
+
+	} // end else
+} // end onkey call
+
+// Function that resets the board and elements after loss/win to start new round
+function resetGame() {
+
+	// Reset variables
+	flag = 0;
+	counter = 0;
+	currentScore = 0;
+	numWrongGuesses = 0;
+	initBooleanArray(letterGuessed, 26);
+	currentWord = [];
+	puzzleWord = [];
+
+	// Get a word that hasn't been used in previous game and assign it
+	do {
+		randNum = (randNum + 4) % 29;
+	} while (usedWord[randNum]);
+	currentWord = wordList[randNum];
+	puzzleWord = [currentWord.length];
+	usedWord[randNum] = true;
+
+	updateScore();
 }
 
+// Function returns Boolean. If puzzle doesn't contain any underscores means puzzle is finished.
 function puzzleSolved(){
-	var flag = true;
+	var isSolved = true;
 	for (var i = 0; i < puzzleWord.length; i++) {
+		console.log(i+": "+puzzleWord[i]+"==="+"_ ");
 		if (puzzleWord[i] === "_ ") {
-			flag = false;
+			isSolved = false;
+			console.log("false")
 		}
 	}
-	return flag;
+	return isSolved;
 }
 
 // Function that returns true if user enters something that's not a letter.
@@ -158,7 +208,6 @@ function isALetter (n) {
 	return (n >= 65 && n <= 90);
 	// return (n >= 65 && n <= 90 || n >= 97 && n <= 122);
 }
-	
 
 // Function that takes in the alphabet index of a valid userGuess and places the letter on the game board.
 function guessLetter (index) {
@@ -171,16 +220,14 @@ function guessLetter (index) {
 	else {
 		var wrongChar = alphabetArray[index].toUpperCase();
 		numWrongGuesses++;
-	//	document.querySelector("#hangman-pic").innerHTML = hangmanImg;
 
-		// add letter to the used-letters section
+		// add letter to the used-letters section of HTML
 		var letter = document.createTextNode(" " + wrongChar);
 		usedLetters.appendChild(letter);
 	}	
-	
+	printArray(puzzleWord);
 	letterGuessed[index] = true;
 }
-
 
 // Function that places the letter on the board and returns true if the letter is in the word.
 //  Returns false otherwise.
@@ -201,14 +248,14 @@ function playableLetter(index) {
 }
 
 // Prints the puzzle by appending each value in array to html element
-function printPuzzle(){
+function printPuzzle() {
 	for (var i = 0; i < puzzleWord.length; i++){
-		var letter = document.createTextNode(puzzleWord[i]);
+		var letter = document.createTextNode(puzzleWord[i] + " ");
 		puzzle.appendChild(letter);
 	}
 }
 
-// Funtion runs whenever the user presses a key.
+// Funtion sets boolean array to false.
 function initBooleanArray (arr, size) {
 	for (var i = 0; i < size; i++) {
 	  arr[i] = false;
@@ -216,12 +263,19 @@ function initBooleanArray (arr, size) {
 }
 
 // Function that updates and returns the new score values
-function updateScore(){
+function updateScore() {
 	var newScore =
-	"<p>Guesses remaining: " + (10 - numWrongGuesses) + "</p>" +
-	"<p>Number of wins: " + wins + "</p>" +
-    "<p>Current game score: " + currentScore + "</p>" +
-    "<p>Total overall score: " + totalScore + "</p>"
+	"<p>Guesses remaining: <span class=\"marker\">" + (10 - numWrongGuesses) + "</span></p>" +
+	"<p>Lives remaining: <span class=\"marker\">" + lives + "</span></p>" +
+	"<p>Number of wins: <span class=\"marker\">" + wins + "</span></p>" +
+    "<p>Current game score: <span class=\"marker\">" + currentScore + "</span></p>" +
+    "<p>Total overall score: <span class=\"marker\">" + totalScore + "</span></p>"
     ;
-	return (newScore);
+	return newScore;
+}
+
+function printArray(arr){
+	for (var i = 0; i < arr.length; i++) {
+	  console.log(arr[i]+"");
+	}	
 }

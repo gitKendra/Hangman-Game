@@ -17,36 +17,41 @@
 	<div class="page-header">
 		<div class="container">
 			<h1>Hangman Game</h1>
-			<p id="rules">Rules: You get 10 guesses to correctly identify the word. Feeling extra risky? Select "Guess word". A correct guess will give you extra points per letter unrevealed. But be careful! An incorrect guess results in an instant game over.</p>
+			<p id="rules">Rules: You get 10 guesses to correctly identify the word.</p>
 		</div>
 	</div>
 
+	<!-- Game / main content -->
 	<div class="container">
 		<div class="row" id="game">
 
 			<!-- Picture -->
-			<div class="col-xs-12 col-sm-6 col-md-4" id="hangman-pic">
-				<img src="assets/images/hangmanLogo.png">
-				<p>Select Start or press the Space Bar to begin a game.</p>
-				<button class = "btn btn-primary" onclick="startGame()">Start</button>
-			</div>
+			<div class="col-xs-12 col-sm-5 col-md-4" id="hangman-pic">
+				<img src="assets/images/hangmanLogo.png" class="img-responsive"></div>
 
-			<!-- Puzzle -->	
-			<div class="col-xs-12 col-sm-6 col-md-5 marker" id="game-board">
+			<!-- Game Board -->	
+			<div class="col-xs-12 col-sm-7 col-md-5 marker" id="game-board">
+				
+				<!-- Puzzle -->
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12" id="puzzle">		<h2 id="puzzle-title"></h2>
-						<p id="puzzle-word"></p>
+					<div class="col-xs-12 col-sm-12 col-md-12" id="puzzle">		
+						<h2 id="puzzle-title"></h2>
+						<p id="puzzle-word">
+							Press the spacebar or Start button to play.
+						</p>
 					</div>
 				</div>
+				
 				<!-- Used Letters -->
 				<div class="row">	
 					<div class="col-xs-12 col-sm-12 col-md-12" id="used-letters">
 						<h2 id="used-title"></h2>
-						<p id="letters-guessed"></p>
+						<p id="letters-guessed">
+							<button class = "btn btn-primary" onclick="startGame()">Start</button>
+						</p>
 					</div>
 				</div>
-			
-		
+				
 				<!-- Score -->
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12" id="score-board">

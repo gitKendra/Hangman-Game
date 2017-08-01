@@ -16,6 +16,13 @@ p {
 	font-size: 15px;
 }
 
+button {
+	font-family: 'Lato', sans-serif;
+}
+
+.img-responsive {
+	margin: 0 auto;
+}
 .marker {
 	font-family: 'Permanent Marker', cursive;
 }
@@ -28,13 +35,15 @@ p {
 	margin-top: 20px;
   text-align: center;
 	font-size: 20px;
+	min-height: 30px;
 }
 #letters-guessed {
 	color: red;
 }
 
 #rules,
-#stats {
+#stats,
+#hangman-pic {
 	font-family: 'Lato', sans-serif;
 }
 
