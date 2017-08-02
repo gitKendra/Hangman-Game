@@ -106,16 +106,9 @@ document.onkeyup = function(event){
 		// valid user guess calls function to play the letter on the board and updates html
 		else {
 			guessLetter(userGuessIndex);
-
-			//update webpage with current details
-//			var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
-	     	document.querySelector("#stats").innerHTML = updateScore();
-	     	document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
 		}
-
-		endGameCheck(); //Check if game is over
-	} // end else
-} // end onkey call
+	} 
+}
 
 //Function that checks if end game condition is met
 function endGameCheck(){
@@ -234,6 +227,7 @@ function guessLetter (index) {
 	}
 	else {
 		numWrongGuesses++;
+		console.log("change imgae");
 		// Update image and puzzle in HTML
 		var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
 		document.querySelector("#hangman-pic").innerHTML = hangmanImg;
@@ -244,6 +238,8 @@ function guessLetter (index) {
 	// Keep user from guessing same letter by setting disabling the button and setting boolean array
 	document.getElementById("btn"+alphabetArray[index]).disabled = true;
 	letterGuessed[index] = true;
+	document.querySelector("#stats").innerHTML = updateScore();
+	endGameCheck(); //Check if game is over
 }
 
 // Function that places the letter on the board and returns true if the letter is in the word.
@@ -271,7 +267,7 @@ function selectLetter(ltr){
 	ltr.disabled = "disabled"; // disables button
 	var index = ltr.innerHTML.charCodeAt(0)-65; // adjust for index value in alphabetArray
 	guessLetter(index);
-	endGameCheck();
+
 }
 
 // Function to create/add alphabet buttons with attributes to HTML
