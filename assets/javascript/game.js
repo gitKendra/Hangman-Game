@@ -55,7 +55,7 @@ function startGame() {
 	document.getElementById("alphabet-btns").innerHTML = "";
 
 	// Set text variables to be updated in HTML
-	var instructions = "Press a letter to make a guess.";
+	var instructions = "Type or Press a letter to make a guess.";
 	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
 	var usedTitle = "Incorrect Guesses";
 	var puzzleTitle = "Puzzle";
@@ -133,7 +133,7 @@ function endGameCheck(){
      	
      	// reset flag to play again
      	flag = 0;
-     	var instructions = "Play again? Press the spacebar to play again."
+     	var instructions = "Play again? Press the spacebar or click the button to play again."
      	document.querySelector("#rules").innerHTML = instructions;
 
      	resetGame();
@@ -147,7 +147,7 @@ function endGameCheck(){
 
      	// Set variable to inform if user can play again or not
      	if (lives > 0) {
-     		instructions = "You lost a life!! Press the spacebar to try again."
+     		instructions = "You lost a life!! Press the spacebar or click the button to try again."
      		flag = 0; // reset flag to play again
      	}
      	else {
