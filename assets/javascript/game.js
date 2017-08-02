@@ -56,7 +56,7 @@ function startGame() {
 
 	// Set text variables to be updated in HTML
 	var instructions = "Type or Press a letter to make a guess.";
-	var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
+	var hangmanImg = "<img src=assets/images/hangman-0.png class=\"img-responsive\">";
 	var usedTitle = "Incorrect Guesses";
 	var puzzleTitle = "Puzzle";
 	var statTitle = "Stats";
@@ -108,7 +108,7 @@ document.onkeyup = function(event){
 			guessLetter(userGuessIndex);
 
 			//update webpage with current details
-			var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
+//			var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
 	     	document.querySelector("#stats").innerHTML = updateScore();
 	     	document.querySelector("#hangman-pic").innerHTML = hangmanImg; 
 		}
@@ -234,8 +234,9 @@ function guessLetter (index) {
 	}
 	else {
 		numWrongGuesses++;
-
-		// add letter to the used-letters section of HTML
+		// Update image and puzzle in HTML
+		var hangmanImg = "<img src=assets/images/hangman-"+numWrongGuesses+".png class=\"img-responsive\">";
+		document.querySelector("#hangman-pic").innerHTML = hangmanImg;
 		var letter = document.createTextNode(" " + alphabetArray[index]);
 		usedLetters.appendChild(letter);
 	}	
@@ -309,7 +310,7 @@ function initBooleanArray (arr, size) {
 // Function that updates and returns the new score values
 function updateScore() {
 	var newScore =
-	"<p>Guesses remaining: <span class=\"marker\">" + (10 - numWrongGuesses) + "</span></p>" +
+	"<p>Incorrect guesses remaining: <span class=\"marker\">" + (10 - numWrongGuesses) + "</span></p>" +
 	"<p>Lives remaining: <span class=\"marker\">" + lives + "</span></p>" +
 	"<p>Number of wins: <span class=\"marker\">" + wins + "</span></p>" +
     "<p>Current game score: <span class=\"marker\">" + currentScore + "</span></p>" +
