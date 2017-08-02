@@ -26,8 +26,12 @@
 		<div class="row" id="game">
 
 			<!-- Picture -->
-			<div class="col-xs-12 col-sm-5 col-md-4" id="hangman-pic">
-				<img src="assets/images/hangmanLogo.png" class="img-responsive"></div>
+			<div class="col-xs-12 col-sm-5 col-md-4">
+				<div id="hangman-pic">
+					<img src="assets/images/hangmanLogo.png" class="img-responsive">
+				</div>
+				<div id="alphabet-btns"></div>
+			</div>
 
 			<!-- Game Board -->	
 			<div class="col-xs-12 col-sm-7 col-md-5 marker" id="game-board">
@@ -47,7 +51,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12" id="used-letters">
 						<h2 id="used-title"></h2>
 						<p id="letters-guessed">
-							<button class = "btn btn-primary" onclick="startGame()">Start</button>
+							<button class = "btn btn-info btn-block" onclick="startGame()">Start</button>
 						</p>
 					</div>
 				</div>

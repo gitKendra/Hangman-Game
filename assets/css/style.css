@@ -19,7 +19,13 @@ p {
 button {
 	font-family: 'Lato', sans-serif;
 }
+/*.btnLetter {
+	display: inline-block;
+	text-align: center;
+	width: 30px;
+	height: 30px;
 
+}*/
 .img-responsive {
 	margin: 0 auto;
 }
