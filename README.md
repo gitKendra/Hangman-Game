@@ -3,7 +3,7 @@ An app that runs in the browser and features dynamically updated HTML powered by
 
 App created using responsive web design for use on multiple devices and screen sizes.
 
-View and play the game at [Hangman-Game] (https://gitkendra.github.io/Hangman-Game/).
+View and play the game at [Hangman-Game](https://gitkendra.github.io/Hangman-Game/).
 
 # Rules and Scoring:
 Try and guess all the letters in the word before you run out of guesses. There are a total of 29 different words.
